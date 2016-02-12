@@ -1,2 +1,2 @@
 # wt1
-Webtech opdr 1
+A repository for webtech assignment 1
