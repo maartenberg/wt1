@@ -2,14 +2,14 @@
 	animation-duration: 1s;
 	animation-name: blink;
 	animation-iteration-count: infinite;
-	animation-timing-function: steps(2, start)
+	animation-timing-function: steps(2, start);
 
 	color: red;
 	font-family: 'Comic Sans MS';
 }
 
 @keyframes blink {
-	50% {
+	80% {
 		visibility: hidden;
 		color: white;
 	}
