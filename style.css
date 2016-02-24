@@ -1,3 +1,9 @@
+footer {
+	background-color: blue;
+	width: 75%;
+	margin-left: 12.5%;
+}
+
 .funtimes  {
 	animation-duration: 1s;
 	animation-name: blink;
@@ -11,6 +17,5 @@
 @keyframes blink {
 	80% {
 		visibility: hidden;
-		color: white;
 	}
 }
