@@ -3,6 +3,10 @@
 	animation-name: blink;
 	animation-iteration-count: infinite;
 	animation-timing-function: steps(2, start)
+
+	background-color: blue;
+	color: red;
+	font-family: 'Comic Sans MS';
 }
 
 @keyframes blink {
