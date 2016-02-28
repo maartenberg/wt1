@@ -1,5 +1,5 @@
 body {
-	background-color: #000000;
+	background-color: #D6D6D6;
 	margin: 0;
 }
 
@@ -10,7 +10,7 @@ body {
 	z-index: 99;
 	position: fixed;
 	top: 0;
-	background-color: #666666;
+	background-color: #777777;
 }
 
 footer {
@@ -38,15 +38,16 @@ footer {
 
 .navbar	{
 	height: 50px;
-    padding: 0;
-	margin: 0;
+	padding: 0;
+	width: 78%;
+	margin: 0 0 0 11%;
 	position: absolute;
 	border-right: 1px solid #757575; 
 }
 
 .navbar li 	{
 	height: auto;
-	width: 150px;
+	width: 16.666666666666666%;
 	float: left;
 	text-align: center; 
 	list-style: none; 
@@ -65,7 +66,7 @@ footer {
 	display: block;
 }
 
- .navbar li:hover, a:hover {
+.navbar li:hover, a:hover {
  	background-color: #8A8A8A;
  } 
 
@@ -82,6 +83,8 @@ footer {
 
 .navbar li ul li {
  	background-color: #757575;
+	width: 100%;
+	text-align: left;
 } 
 
 .navbar li ul li a {
@@ -89,6 +92,7 @@ footer {
 	border-right: 1px solid #575757; 
 	border-top: 1px solid #757575; 
 	border-bottom: 1px solid #575757; 
+	padding-left: 10px;
 }
 				
 .navbar li ul li a:hover {
@@ -100,8 +104,17 @@ footer {
 }
 
 .inhoud {
-	padding: 20px;
+	padding: 20px 0 20px 0;
 	margin-top: 30px;
 	background-color: #D1D1D1;
-	height: 1500px;
+	margin-left: 11%;
+	width: 77.8%;
+	border-left: 1px solid #C2C2C2;
+	border-right: 1px solid #C2C2C2;
+	height: 1200px;
+}
+
+.inhoud h1, h2, h3, h4, h5, h6, p {
+	margin-left: 20px;
+	margin-right: 20px;
 }
