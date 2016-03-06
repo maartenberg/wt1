@@ -51,8 +51,27 @@ function plot_https_keepalive() {
 			], commonChartData);
 
 }
+
+function plot_pipelining() {
+	var close_points = [];
+	var keepalive_points = [];
+	var pipeline_points = [];
+
+	for (var i = 1; i <= 20; i += 1) {
+		close_points.push([i, 3*i]); //close: 3RRT *n
+		keepalive_points.push([i, 3 + (i - 1)]); // keep-alive: 3 + n-1 RTT
+		pipeline_points.push([i, 3 + Math.ceil((i - 1)/2)]); // pipelining: 3 + (n-1/2)
+	}
+
+	$.plot("#pipelining_chart",  [
+			{ label: "close", data: close_points },
+			{ label: "keepalive", data: keepalive_points },
+			{ label: "pipelining", data: pipeline_points }
+	], commonChartData);
+}
 $(document).ready(
 	function() {
 		plot_keepalive();
 		plot_https_keepalive();
+		plot_pipelining();
 	});

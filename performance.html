@@ -118,7 +118,7 @@
 						In HTTP/1.1, the <em>Connection</em> header was standardized, and
 						connections were kept open unless explicitly specified using the
 						<code>Connection: close</code> header.
-						<sup><a href="fn-1.1-persistence" id="ref-1.1-persistence">1.1</a></sup>
+						<sup><a href="#fn-1.1-persistence" id="ref-1.1-persistence">1.1</a></sup>
 					</li>
 					<li>
 						In HTTP/2, like in HTTP/1.1, keep-alive is the default option, but HTTP/2
@@ -146,9 +146,20 @@
 				which may be expensive if there are many connected clients. More information on this
 				problem may be found in <a href="https://www.nginx.com/blog/http-keepalives-and-web-performance/"
 				title="HTTP Keepalive Connections and Web Performance">this post</a>, by the company
-				behind nginx, a widely used server.</p>
+				behind nginx, a popular server.</p>
 
 				<h3>TCP Pipelining</h3>
+				<p>TCP Pipelining extends the keep-alive mechanism, as it relies on sending multiple
+				requests at once, over the same TCP connection, without having to wait for the
+				response of the first request. Pipelining is unfortunately not widely supported, as
+				many browsers either do not implement pipelining or disable it by default. </p>
+				<p>The following chart shows the amount of RTT required to retrieve <em>n</em>
+				resources from a server without keep-alive, with keep-alive but without pipelining,
+				and with pipelining (and keep-alive). The amount of requests that can be sent at the
+				same time is not defined, but Mozilla recommends
+				<sup><a href="#fn-moz-pipelining" id="ref-moz-pipelining">link</a></sup>
+				a maximum of two requests at the same time. </p>
+				<div class="chart" id="pipelining_chart"></div>
 
 			<h2>Disk speed</h2>
 
