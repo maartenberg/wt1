@@ -5,7 +5,7 @@
 		<script src="../js/flot/jquery.js"></script>
 		<script src="../js/flot/jquery.flot.js"></script>
 		<script>
-			$(function() {
+			function plot_keepalive() {
 				var close_points = [];
 				var keepalive_points = [];
 
@@ -17,9 +17,9 @@
 					keepalive_points.push([i, 3 + (i - 1)]);
 				} 
 
-				$.plot("#pipelining_chart", [
-						{ label: "close", data: close_points}, 
-						{ label: "keep-alive", data: keepalive_points}
+				$.plot("#keepalive_chart", [
+						{ label: "close", hoverable: true, data: close_points}, 
+						{ label: "keep-alive", hoverable:true, data: keepalive_points}
 				], {
 					series: {
 						lines: { show: false },
@@ -27,14 +27,20 @@
 					},
 					xaxis: {
 						ticks: 20,
-						tickDecimals: 0
+						tickDecimals: 0,
 					}
 				});
-			});
+			}
+			$(document).ready(
+				function() {
+					plot_keepalive();
+				});
+
 		</script>
+		<link rel="stylesheet" href="charts.css">
 	</head>
 	<body>
-		<div id="pipelining_chart" style="width:600px; height:300px">
+		<div id="keepalive_chart" class="chart">
 		</div>
 	</body>
 </html>
