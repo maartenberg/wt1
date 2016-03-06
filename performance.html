@@ -45,7 +45,9 @@
 		</div>
 		<div class="inhoud">
 			<h1>Performance</h1>
-			<p>In this section, we analyze the various factors that may impact a webserver's efficiency, the speed with which it may serve requests, and compare the different ways some servers handle these factors.</p>
+			<p>In this section, we analyze the various factors that may impact a webserver's
+			efficiency, the speed with which it may serve requests, and compare the different ways
+			some servers handle these factors.</p>
 
 			<h2>Network speed</h2> 
 			<p>Both requests and responses have to be sent across a network, usually the Internet,
@@ -115,7 +117,8 @@
 					<li>
 						In HTTP/1.1, the <em>Connection</em> header was standardized, and
 						connections were kept open unless explicitly specified using the
-						<code>Connection: close</code> header. <!--ref-->
+						<code>Connection: close</code> header.
+						<sup><a href="fn-1.1-persistence" id="ref-1.1-persistence">1.1</a></sup>
 					</li>
 					<li>
 						In HTTP/2, like in HTTP/1.1, keep-alive is the default option, but HTTP/2
@@ -128,6 +131,24 @@
 				same connection (with and without keep-alive).</p>
 
 				<div id="keepalive_chart" class="chart"></div>
+
+				<p>The following chart displays the amount of RTT required to retrieve <em>n</em>
+				resources from a server, using a HTTPS connection, with and without reusing the
+				connection.</p>
+
+				<div id="keepalive_https_chart" class="chart"></div>
+
+				<p>As the charts show, keep-alive connections greatly reduce the overhead required
+				to retrieve the content, especially when using HTTPS. Fortunately, keep-alive is the
+				default connection state in HTTP/1.1 and should be widely used.
+				<em>Un</em>fortunately, keep-alive increases the server load somewhat, as the server
+				has to keep track of all connections that may or may not send additional requests,
+				which may be expensive if there are many connected clients. More information on this
+				problem may be found in <a href="https://www.nginx.com/blog/http-keepalives-and-web-performance/"
+				title="HTTP Keepalive Connections and Web Performance">this post</a>, by the company
+				behind nginx, a widely used server.</p>
+
+				<h3>TCP Pipelining</h3>
 
 			<h2>Disk speed</h2>
 
@@ -167,11 +188,17 @@
 					<a href="#ref-IANA-compression">Return to content</a>
 				</li>
 
+				<!-- keep-alive -->
+				<li id="fn-1.1-persistence">
+					<a href="http://tools.ietf.org/html/rfc7230#section-6.3" title="Persistence">
+						Persistence in HTTP/1.1</a>
+					<a href="#ref-1.1-persistence">Return to content</a>
+				</li>
 				<!-- Pipelining -->
 				<li id="fn-moz-pipelining">
 					<a href="http://www-archive.mozilla.org/projects/netlib/http/pipelining-faq.html"
 					title="HTTP/1.1 Pipelining FAQ">HTTP/1.1 Pipelining FAQ</a>
-					<a href="ref-moz-pipelining">Return to content</a>
+					<a href="#ref-moz-pipelining">Return to content</a>
 				</li>
 			</ol>
 		</div>
