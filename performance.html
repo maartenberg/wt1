@@ -6,7 +6,8 @@
 		<link rel="stylesheet" type="text/css" href="style.css" />
 		<link rel="stylesheet" type="text/css" href="charts.css" />
 		<script src="js/flot/jquery.js"></script>
-		<script src="js/flot/flot.jquery.js"></script>
+		<script src="js/flot/jquery.flot.js"></script>
+		<script src="js/performance-charts.js"></script>
 	</head>
 	<body>
 		<div id="wrap">
@@ -80,6 +81,54 @@
 					<a href="#fn-IANA-compression" id="ref-IANA-compression">link</a></sup>
 				</p>
 
+				<p>HTTP/1.0 and 1.1 only allow compression of the request or response body, but in
+				HTTP/2 the request headers may be compressed as well.</p>
+
+				<h3>Connection: keep-alive</h3>
+				<p>By default, a new TCP connection is created for each request to a server, by
+				performing the 3-way handshake: the client sends a packet requesting a connection to
+				the server (SYN), the server acknowledges this request and requests a confirmation
+				of this confirmation (SYN-ACK), and the client then confirms the connection and may
+				begin sending data (ACK). This requires the client and server to wait 3 RTT (Round
+				Trip Time), as the packets (sadly) do not appear instantly on their destination.</p>
+
+				<p>When a request has been served, the connection to the server is closed again.
+				This means that when the client wants to retrieve more content from the same server,
+				either resources linked from a retrieved page or another page or unrelated content,
+				the client will have to re-establish a connection to the server by performing the
+				3-way handshake again. If the client and server were using a connection secured by
+				HTTPS/SSL, re-establishing a connection is even more inefficient, as the secure
+				connection requires 2 RTT and key computation by both client and server.<!--ref--></p>
+
+				<p>This situation may be improved by not closing the connection after each request,
+				but instead allowing the connection to be reused for potential following requests.
+				Behaviour for this mechanism is negotiated using the <em>Connection</em> header, and
+				varies across HTTP versions:</p>
+				<ul>
+					<li>
+						In HTTP/1.0, connections are automatically closed unless specified by using
+						the <code>Connection: keep-alive</code> header and keep-alive being
+						supported by both client and server. Keep-alive was not specified in the RFC
+						for HTTP/1.0 and was more of a unofficial add-on, so it was not always
+						available.
+					</li>
+					<li>
+						In HTTP/1.1, the <em>Connection</em> header was standardized, and
+						connections were kept open unless explicitly specified using the
+						<code>Connection: close</code> header. <!--ref-->
+					</li>
+					<li>
+						In HTTP/2, like in HTTP/1.1, keep-alive is the default option, but HTTP/2
+						contains several improvements to keep-alive connections, such as server
+						push.
+					</li>
+				</ul>
+				<p>The following chart displays the amount of RTT required to retrieve <em>n</em>
+				resources from a server (over a plain HTTP connection) with and without reusing the
+				same connection (with and without keep-alive).</p>
+
+				<div id="keepalive_chart" class="chart"></div>
+
 			<h2>Disk speed</h2>
 
 			<h2>Architecture</h2>
@@ -116,6 +165,13 @@
 					<a href="https://www.iana.org/assignments/http-parameters/http-parameters.xml#content-coding"
 						title="HTTP Content Coding Registry">HTTP Content Coding Registry</a>
 					<a href="#ref-IANA-compression">Return to content</a>
+				</li>
+
+				<!-- Pipelining -->
+				<li id="fn-moz-pipelining">
+					<a href="http://www-archive.mozilla.org/projects/netlib/http/pipelining-faq.html"
+					title="HTTP/1.1 Pipelining FAQ">HTTP/1.1 Pipelining FAQ</a>
+					<a href="ref-moz-pipelining">Return to content</a>
 				</li>
 			</ol>
 		</div>
