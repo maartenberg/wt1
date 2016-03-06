@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Performance</title>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="style.css" />
+		<link rel="stylesheet" type="text/css" href="charts.css" />
+		<script src="js/flot/jquery.js"></script>
+		<script src="js/flot/flot.jquery.js"></script>
+	</head>
+	<body>
+		<div id="wrap">
+		  <ul class="navbar">
+			 <li><a href="#" class="active">Home</a></li>
+			 <li><a href="#">General</a>
+				<ul>
+				   <li><a href="#">Tasks</a></li>
+				   <li><a href="#">Internal Workings</a></li>
+				   <li><a href="#">Security</a></li>
+				   <li><a href="#">Restrictions</a></li>
+				</ul>         
+			 </li>
+			 <li><a href="#">Performance</a>
+				<ul>
+				   <li><a href="#">Efficiency</a></li>
+				   <li><a href="#">Comparison</a></li> 
+				</ul>         
+			 </li>
+			 <li><a href="#">Kinds of servers</a>
+				<ul>
+				   <li><a href="#">Threading/Forking</a></li>
+				   <li><a href="#">Event-driven</a></li>
+				   <li><a href="#">???</a></li>
+				</ul>         
+			 </li>
+			 <li><a href="#">Future</a> </li>
+			 <li><a href="#">About</a>
+				<ul>
+				   <li><a href="#">About Us</a></li>
+				   <li><a href="#">The Assignment</a></li>
+				</ul>         
+			 </li>
+		  </ul>
+		</div>
+		<div class="inhoud">
+			<h1>Performance</h1>
+			<p>In this section, we analyze the various factors that may impact a webserver's efficiency, the speed with which it may serve requests, and compare the different ways some servers handle these factors.</p>
+
+			<h2>Network speed</h2> 
+			<p>Both requests and responses have to be sent across a network, usually the Internet,
+			in order to serve a site. The speed with which a request or response can be sent or
+			received is dependent on both the server's and client's connection speed, and a limiting
+			factor in how fast a request may be served.</p>
+			<p>Ways for webservers (or clients) to use their bandwidth more efficiently are outlined
+			in this subsection.</p>
+			
+				<h3>Caching</h3>
+				<p>Reponses, especially static content such as images or Javascript, may be cached
+				(temporarily stored by) by the client or an intermediate server in order to reduce
+				load on the server, as the static content will be able to reach the client
+				sooner.</p>
+
+				<h3>Compression</h3>
+				<p>The contents of both requests and responses may be compressed by the server and
+				client, if both parties support this. Compression is negotiated via the
+				<em>Accept-Encoding</em>
+					<sup><a href="#fn-AE-1.0" id="ref-AE-1.0">1.0</a></sup>
+					<sup><a href="#fn-AE-1.1" id="ref-AE-1.1">1.1</a></sup> 
+				and <em>Content-Encoding</em>
+					<sup><a href="#fn-CE-1.0" id="ref-CE-1.0">1.0</a></sup>
+					<sup><a href="#fn-CE-1.1" id="ref-CE-1.1">1.1</a></sup>
+				headers.</p>
+
+				<p>However, compression requires additional computation by the client and server, as
+				all content has to undergo an additional compression step. In order to migitate
+				this, webservers may cache compressed data, and directly serve the pre-compressed
+				data (so the server does not have to re-compress the data for each request).</p>
+
+				<p>Compression algorithms that may be used are specified by the IANA.<sup>
+					<a href="#fn-IANA-compression" id="ref-IANA-compression">link</a></sup>
+				</p>
+
+			<h2>Disk speed</h2>
+
+			<h2>Architecture</h2>
+
+			<hr />
+			<h2>References</h2>
+			<ol>
+				<!-- References for Network Speed > Compression -->
+				<li id="fn-AE-1.0">
+					<a href="https://tools.ietf.org/html/rfc1945#appendix-D.2.3"
+		title="Accept-Encoding">Accept-Encoding in HTTP/1.0
+					</a>
+					<a href="#ref-AE-1.0">Return to content</a>
+				</li>
+				<li id="fn-AE-1.1">
+					<a href="http://tools.ietf.org/html/rfc2616#section-14.3" title="Accept-Encoding">
+						Accept-Encoding in HTTP/1.1
+					</a>
+					<a href="#ref-AE-1.1">Return to content</a>
+				</li>
+
+				<li id="fn-CE-1.0">
+					<a href="https://tools.ietf.org/html/rfc1945#section-10.3"
+		title="Content-Encoding">Content-Encoding in HTTP/1.0</a>
+					<a href="#ref-CE-1.0">Return to content</a>
+				</li>
+				<li id="fn-CE-1.1">
+					<a href="http://tools.ietf.org/html/rfc2616#section-14.11"
+		title="Content-Encoding">Content-Encoding in HTTP/1.1</a>
+					<a href="#ref-CE-1.1">Return to content</a>
+				</li>
+
+				<li id="fn-IANA-compression">
+					<a href="https://www.iana.org/assignments/http-parameters/http-parameters.xml#content-coding"
+						title="HTTP Content Coding Registry">HTTP Content Coding Registry</a>
+					<a href="#ref-IANA-compression">Return to content</a>
+				</li>
+			</ol>
+		</div>
+	</body>
+</html>
