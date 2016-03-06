@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>RTTs voor verschillende pipelinings</title>
+		<link rel="stylesheet" href="charts.css">
+		<script src="../js/flot/jquery.js"></script>
+		<script src="../js/flot/jquery.flot.js"></script>
+		<script>
+			function plot_pipelining() {
+				var close_points = [];
+				var keepalive_points = [];
+				var pipeline_points = [];
+
+				for (var i = 1; i <= 20; i += 1) {
+					close_points.push([i, 3*i]);
+					keepalive_points.push([i, 3 + (i - 1)]);
+					pipeline_points.push([i, 3 + Math.ceil((i - 1)/2)]);
+				}
+
+				$.plot("#pipelining_chart",  [
+						{ label: "close", data: close_points },
+						{ label: "keepalive", data: keepalive_points },
+						{ label: "pipelining", data: pipeline_points }
+				], {
+					series: {
+						lines: { show: false },
+						points: { show: true }
+					},
+					xaxis: {
+						ticks: 20,
+						tickDecimals: 0
+					}
+				});
+			}
+			$(document).ready(
+					function() {
+						plot_pipelining();
+					});
+		</script>
+	</head>
+	<body>
+		<div id="pipelining_chart" class="chart">
+		</div>
+	</body>
+</html>
