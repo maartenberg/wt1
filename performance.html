@@ -20,7 +20,12 @@
 				   <li><a href="general.html#security">Security</a></li>   
 				</ul>         
 			 </li>
-			 <li><a href="#" class="active">Performance</a>        
+			 <li><a href="#" class="active">Performance</a> 
+			 	<ul>
+			 		<li><a href="performance.html#netspeed">Network speed</a></li>
+			 		<li><a href="performance.html#diskspeed">Disk speed</a></li>
+			 		<li><a href="performance.html#architec">Architecture</a><li>
+			 	</ul>      
 			 </li>
 			 <li><a href="#">Kinds of servers</a>
 				<ul>
@@ -44,7 +49,7 @@
 			efficiency, the speed with which it may serve requests, and compare the different ways
 			some servers handle these factors.</p>
 
-			<h2>Network speed</h2> 
+			<h2 id="netspeed">Network speed</h2> 
 			<p>Both requests and responses have to be sent across a network, usually the Internet,
 			in order to serve a site. The speed with which a request or response can be sent or
 			received is dependent on both the server's and client's connection speed, and a limiting
@@ -160,7 +165,7 @@
 				a maximum of two requests at the same time. </p>
 				<div class="chart" id="pipelining_chart"></div>
 
-			<h2>Disk speed</h2>
+			<h2 id="diskspeed">Disk speed</h2>
 			<p>A webserver usually requires loading data from a storage medium to determine how to
 			respond to a request, and will be limited by the speed of the medium. Ways to reduce the
 			delay introduced by waiting for the storage medium include:</p>
@@ -182,7 +187,7 @@
 				</li>
 			</ol>
 
-			<h2>Architecture</h2>
+			<h2 id="architec">Architecture</h2>
 			<p>A webserver's architecture determines the way incoming requests are handled, and
 			indirectly the overall efficiency of the server, mainly the resources required to handle
 			a request. Most webservers are either <em>forking</em> or <em>event-driven</em> servers.</p>
