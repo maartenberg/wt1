@@ -3,7 +3,7 @@ var maxpages;
 
 function photos() {
 
-    var apiURL = "https://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=e2d8c31c046c8a1023be1216ff4eafa3&photoset_id=72157664952757730&user_id=139085922%40N04&per_page=12&format=json&jsoncallback=?&page="+pagenr;
+    var apiURL = "https://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=e2d8c31c046c8a1023be1216ff4eafa3&photoset_id=72157663245223943&user_id=139085922%40N04&per_page=12&format=json&jsoncallback=?&page="+pagenr;
 
     $.getJSON(apiURL, function(data){
 
