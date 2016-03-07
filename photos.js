@@ -3,7 +3,7 @@ var maxpages;
 
 function photos() {
 
-    var apiURL = "https://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=88b38fa938012279362204219265a900&photoset_id=72157664952757730&user_id=139085922%40N04&per_page=12&format=json&jsoncallback=?&page="+pagenr;
+    var apiURL = "https://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=e2d8c31c046c8a1023be1216ff4eafa3&photoset_id=72157664952757730&user_id=139085922%40N04&per_page=12&format=json&jsoncallback=?&page="+pagenr;
 
     $.getJSON(apiURL, function(data){
 
@@ -25,8 +25,8 @@ function photos() {
 			for every image.
         	*/
         	
-        	$( "<div class=\"imgthingie\" id=\"" + i + "\"> " ).appendTo( "#images" ).wrap(("<a href='" + a_href + "'></a>" ))
-        	$( "<img/>" ).attr( "src", img_src ).appendTo( "#"+i )
+        	$( "<div class=\"imgthingie\" id=\"" + i + "\"> " ).appendTo( "#images").wrap(("<a href='" + a_href + "'></a>"))
+        	$( "<img/>" ).attr("src", img_src).appendTo("#"+i)
         	$( "</div>" ).appendTo( "#images" )
 
         	//WRAP IN LINK

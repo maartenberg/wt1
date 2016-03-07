@@ -1,14 +1,23 @@
-function getReferences() {
 
-	/*
-	Each link to an external site in the text needs to look like this:
-	<sup><a class="ref" href="#fn-[somethingaboutref]" id="ref-[same somethingaboutref]" data-description="[Link text in ref's]" data-external="[external link]">[tekst]</a></sup>
-	*/
+$(document).ready(function() {
+	$("#references").append("<ol id=\"footnotes\"></ol>");
+	footnote = 1;
+	$("a[title]").addClass("footnote");
+	$(".footnote").each(function() {
+		var id = 'note' + footnote;
+		$(this).attr('id', id);
+		$(this).append("<sup>"+footnote+"</sup>");
+		cite="<li>";
+		url=$(this).attr("data-external");
+		title=$(this).attr("title");
 
-	$.each(".ref", function(i, ref){
-		$.( "<li id=\"" + ref.href + "\"> <a href=\"" + ref.data-external + "\">" + ref.data-description + "</a> <a href=\"" + ref.id + "\"" + &#8617; + "</a> </li>" ).appendTo("#references");
+		
+			cite+="<a href=\""+url+"\">"+title+"</a>";
+			cite+="<a href=\"#"+id+"\">&#8617;</a>";
+		
+
+		cite+="</li>";
+		$("#footnotes").append(cite);
+		footnote++;
 	});
-
-}
-
-getReferences();
+});

@@ -149,3 +149,8 @@ img {
 	clear: both; 
 	padding-left: 3vw;
 }
+
+#references {
+	clear: both;
+	min-height: 20px;
+}
