@@ -8,11 +8,12 @@
 		<script src="js/flot/jquery.js"></script>
 		<script src="js/flot/jquery.flot.js"></script>
 		<script src="js/performance-charts.js"></script>
+		<script src="references.js"></script>
 	</head>
 	<body>
 		<div id="wrap">
 		  <ul class="navbar">
-			 <li><a href="#" class="active">Home</a></li>
+			 <li><a href="index.html">Home</a></li>
 			 <li><a href="#">General</a>
 				<ul>
 				   <li><a href="#">Tasks</a></li>
@@ -21,7 +22,7 @@
 				   <li><a href="#">Restrictions</a></li>
 				</ul>         
 			 </li>
-			 <li><a href="#">Performance</a>
+			 <li><a href="#" class="active">Performance</a>
 				<ul>
 				   <li><a href="#">Efficiency</a></li>
 				   <li><a href="#">Comparison</a></li> 
@@ -67,11 +68,13 @@
 				<p>The contents of both requests and responses may be compressed by the server and
 				client, if both parties support this. Compression is negotiated via the
 				<em>Accept-Encoding</em>
-					<sup><a href="#fn-AE-1.0" id="ref-AE-1.0">1.0</a></sup>
-					<sup><a href="#fn-AE-1.1" id="ref-AE-1.1">1.1</a></sup> 
+					<a data-external="https://tools.ietf.org/html/rfc1945#appendix-D.2.3" title="Accept-Encoding in HTTP/1.0"></a>
+					<a data-external="http://tools.ietf.org/html/rfc2616#section-14.3" title="Accept-Encoding in HTTP/1.1"></a> 
 				and <em>Content-Encoding</em>
-					<sup><a href="#fn-CE-1.0" id="ref-CE-1.0">1.0</a></sup>
-					<sup><a href="#fn-CE-1.1" id="ref-CE-1.1">1.1</a></sup>
+					<a data-external="https://tools.ietf.org/html/rfc1945#section-10.3"
+		title="Content-Encoding" title="Content-Encoding in HTTP/1.0"></a>
+					<a data-external="http://tools.ietf.org/html/rfc2616#section-14.11"
+		title="Content-Encoding" title="Content-Encoding in HTTP/1.1"></a>
 				headers.</p>
 
 				<p>However, compression requires additional computation by the client and server, as
@@ -79,8 +82,8 @@
 				this, webservers may cache compressed data, and directly serve the pre-compressed
 				data (so the server does not have to re-compress the data for each request).</p>
 
-				<p>Compression algorithms that may be used are specified by the IANA.<sup>
-					<a href="#fn-IANA-compression" id="ref-IANA-compression">link</a></sup>
+				<p>Compression algorithms that may be used are specified by the IANA.
+					<a data-external="https://www.iana.org/assignments/http-parameters/http-parameters.xml#content-coding" title="HTTP Content Coding Registry"></a>
 				</p>
 
 				<p>HTTP/1.0 and 1.1 only allow compression of the request or response body, but in
@@ -91,7 +94,7 @@
 				performing the 3-way handshake: the client sends a packet requesting a connection to
 				the server (SYN), the server acknowledges this request and requests a confirmation
 				of this confirmation (SYN-ACK), and the client then confirms the connection and may
-				begin sending data (ACK).<sup><a href="#fn-tcp-3whs" id="ref-tcp-3whs">link</a></sup>
+				begin sending data (ACK).<a data-external="http://tools.ietf.org/html/rfc793#section-3.4" title="RFC 793: Establishing a connection"></a>
 				This requires the client and server to wait 3 RTT (Round Trip Time), as the packets
 				(sadly) do not appear instantly on their destination.</p>
 
@@ -119,7 +122,7 @@
 						In HTTP/1.1, the <em>Connection</em> header was standardized, and
 						connections were kept open unless explicitly specified using the
 						<code>Connection: close</code> header.
-						<sup><a href="#fn-1.1-persistence" id="ref-1.1-persistence">1.1</a></sup>
+						<a data-external="http://tools.ietf.org/html/rfc7230#section-6.3" title="Persistence in HTTP/1.1"></a>
 					</li>
 					<li>
 						In HTTP/2, like in HTTP/1.1, keep-alive is the default option, but HTTP/2
@@ -145,7 +148,7 @@
 				<em>Un</em>fortunately, keep-alive increases the server load somewhat, as the server
 				has to keep track of all connections that may or may not send additional requests,
 				which may be expensive if there are many connected clients. More information on this
-				problem may be found in <a href="https://www.nginx.com/blog/http-keepalives-and-web-performance/"
+				problem may be found in <a data-external="https://www.nginx.com/blog/http-keepalives-and-web-performance/"
 				title="HTTP Keepalive Connections and Web Performance">this post</a>, by the company
 				behind nginx, a popular server.</p>
 
@@ -158,7 +161,8 @@
 				resources from a server without keep-alive, with keep-alive but without pipelining,
 				and with pipelining (and keep-alive). The amount of requests that can be sent at the
 				same time is not defined, but Mozilla recommends
-				<sup><a href="#fn-moz-pipelining" id="ref-moz-pipelining">link</a></sup>
+				<a data-external="http://www-archive.mozilla.org/projects/netlib/http/pipelining-faq.html"
+					title="HTTP/1.1 Pipelining FAQ"></a>
 				a maximum of two requests at the same time. </p>
 				<div class="chart" id="pipelining_chart"></div>
 
@@ -219,54 +223,8 @@
 				<p>todo</p>
 			<hr />
 			<h2>References</h2>
-			<ol>
-				<!-- References for Network Speed > Compression -->
-				<li id="fn-tcp-3whs">
-					<a href="http://tools.ietf.org/html/rfc793#section-3.4">
-						RFC 793: Establishing a connection</a>
-					<a href="#ref-tcp-3whs">&#8617;</a>
-				</li>
-				<li id="fn-AE-1.0">
-					<a href="https://tools.ietf.org/html/rfc1945#appendix-D.2.3"
-		title="Accept-Encoding">Accept-Encoding in HTTP/1.0</a> 
-					<a href="#ref-AE-1.0">&#8617;</a>
-				</li>
-				<li id="fn-AE-1.1">
-					<a href="http://tools.ietf.org/html/rfc2616#section-14.3" title="Accept-Encoding">
-						Accept-Encoding in HTTP/1.1</a> 
-					<a href="#ref-AE-1.1">&#8617;</a>
-				</li>
-
-				<li id="fn-CE-1.0">
-					<a href="https://tools.ietf.org/html/rfc1945#section-10.3"
-		title="Content-Encoding">Content-Encoding in HTTP/1.0</a> 
-					<a href="#ref-CE-1.0">&#8617;</a>
-				</li>
-				<li id="fn-CE-1.1">
-					<a href="http://tools.ietf.org/html/rfc2616#section-14.11"
-		title="Content-Encoding">Content-Encoding in HTTP/1.1</a> 
-					<a href="#ref-CE-1.1">&#8617;</a>
-				</li>
-
-				<li id="fn-IANA-compression">
-					<a href="https://www.iana.org/assignments/http-parameters/http-parameters.xml#content-coding"
-						title="HTTP Content Coding Registry">HTTP Content Coding Registry</a>
-					<a href="#ref-IANA-compression">&#8617;</a>
-				</li>
-
-				<!-- keep-alive -->
-				<li id="fn-1.1-persistence">
-					<a href="http://tools.ietf.org/html/rfc7230#section-6.3" title="Persistence">
-						Persistence in HTTP/1.1</a>
-					<a href="#ref-1.1-persistence">&#8617;</a>
-				</li>
-				<!-- Pipelining -->
-				<li id="fn-moz-pipelining">
-					<a href="http://www-archive.mozilla.org/projects/netlib/http/pipelining-faq.html"
-					title="HTTP/1.1 Pipelining FAQ">HTTP/1.1 Pipelining FAQ</a>
-					<a href="#ref-moz-pipelining">&#8617;</a>
-				</li>
-			</ol>
+			<div id="references">
+			</div>
 		</div>
 	</body>
 </html>
