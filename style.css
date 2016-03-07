@@ -22,22 +22,6 @@ footer {
 	clear: both;
 }
 
-.funtimes  {
-	animation-duration: 1s;
-	animation-name: blink;
-	animation-iteration-count: infinite;
-	animation-timing-function: steps(2, start);
-
-	color: red;
-	font-family: 'Comic Sans MS';
-}
-
-@keyframes blink {
-	80% {
-		visibility: hidden;
-	}
-}
-
 .navbar	{
 	height: 50px;
 	padding: 0;
@@ -49,7 +33,7 @@ footer {
 
 .navbar li 	{
 	height: auto;
-	width: 13vw;
+	width: 15.6vw;
 	float: left;
 	text-align: center; 
 	list-style: none; 
