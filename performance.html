@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Performance</title>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="style.css" />
+		<link rel="stylesheet" type="text/css" href="charts.css" />
+		<script src="js/flot/jquery.js"></script>
+		<script src="js/flot/jquery.flot.js"></script>
+		<script src="js/performance-charts.js"></script>
+	</head>
+	<body>
+		<div id="wrap">
+		  <ul class="navbar">
+			 <li><a href="#" class="active">Home</a></li>
+			 <li><a href="#">General</a>
+				<ul>
+				   <li><a href="#">Tasks</a></li>
+				   <li><a href="#">Internal Workings</a></li>
+				   <li><a href="#">Security</a></li>
+				   <li><a href="#">Restrictions</a></li>
+				</ul>         
+			 </li>
+			 <li><a href="#">Performance</a>
+				<ul>
+				   <li><a href="#">Efficiency</a></li>
+				   <li><a href="#">Comparison</a></li> 
+				</ul>         
+			 </li>
+			 <li><a href="#">Kinds of servers</a>
+				<ul>
+				   <li><a href="#">Threading/Forking</a></li>
+				   <li><a href="#">Event-driven</a></li>
+				   <li><a href="#">???</a></li>
+				</ul>         
+			 </li>
+			 <li><a href="#">Future</a> </li>
+			 <li><a href="#">About</a>
+				<ul>
+				   <li><a href="#">About Us</a></li>
+				   <li><a href="#">The Assignment</a></li>
+				</ul>         
+			 </li>
+		  </ul>
+		</div>
+		<div class="inhoud">
+			<h1>Performance</h1>
+			<p>In this section, we analyze the various factors that may impact a webserver's
+			efficiency, the speed with which it may serve requests, and compare the different ways
+			some servers handle these factors.</p>
+
+			<h2>Network speed</h2> 
+			<p>Both requests and responses have to be sent across a network, usually the Internet,
+			in order to serve a site. The speed with which a request or response can be sent or
+			received is dependent on both the server's and client's connection speed, and a limiting
+			factor in how fast a request may be served.</p>
+			<p>Ways for webservers (or clients) to use their bandwidth more efficiently are outlined
+			in this subsection.</p>
+			
+				<h3 id="sec-compression">Caching</h3>
+				<p>Reponses, especially static content such as images or Javascript, may be cached
+				(temporarily stored by) by the client or an intermediate server in order to reduce
+				load on the server, as the static content will be able to reach the client
+				sooner.</p>
+
+				<h3>Compression</h3>
+				<p>The contents of both requests and responses may be compressed by the server and
+				client, if both parties support this. Compression is negotiated via the
+				<em>Accept-Encoding</em>
+					<sup><a href="#fn-AE-1.0" id="ref-AE-1.0">1.0</a></sup>
+					<sup><a href="#fn-AE-1.1" id="ref-AE-1.1">1.1</a></sup> 
+				and <em>Content-Encoding</em>
+					<sup><a href="#fn-CE-1.0" id="ref-CE-1.0">1.0</a></sup>
+					<sup><a href="#fn-CE-1.1" id="ref-CE-1.1">1.1</a></sup>
+				headers.</p>
+
+				<p>However, compression requires additional computation by the client and server, as
+				all content has to undergo an additional compression step. In order to migitate
+				this, webservers may cache compressed data, and directly serve the pre-compressed
+				data (so the server does not have to re-compress the data for each request).</p>
+
+				<p>Compression algorithms that may be used are specified by the IANA.<sup>
+					<a href="#fn-IANA-compression" id="ref-IANA-compression">link</a></sup>
+				</p>
+
+				<p>HTTP/1.0 and 1.1 only allow compression of the request or response body, but in
+				HTTP/2 the request headers may be compressed as well.</p>
+
+				<h3>Connection: keep-alive</h3>
+				<p>By default, a new TCP connection is created for each request to a server, by
+				performing the 3-way handshake: the client sends a packet requesting a connection to
+				the server (SYN), the server acknowledges this request and requests a confirmation
+				of this confirmation (SYN-ACK), and the client then confirms the connection and may
+				begin sending data (ACK).<sup><a href="#fn-tcp-3whs" id="ref-tcp-3whs">link</a></sup>
+				This requires the client and server to wait 3 RTT (Round Trip Time), as the packets
+				(sadly) do not appear instantly on their destination.</p>
+
+				<p>When a request has been served, the connection to the server is closed again.
+				This means that when the client wants to retrieve more content from the same server,
+				either resources linked from a retrieved page or another page or unrelated content,
+				the client will have to re-establish a connection to the server by performing the
+				3-way handshake again. If the client and server were using a connection secured by
+				HTTPS/SSL, re-establishing a connection is even more inefficient, as the secure
+				connection requires 2 RTT and key computation by both client and server.<!--ref--></p>
+
+				<p>This situation may be improved by not closing the connection after each request,
+				but instead allowing the connection to be reused for potential following requests.
+				Behaviour for this mechanism is negotiated using the <em>Connection</em> header, and
+				varies across HTTP versions:</p>
+				<ul>
+					<li>
+						In HTTP/1.0, connections are automatically closed unless specified by using
+						the <code>Connection: keep-alive</code> header and keep-alive being
+						supported by both client and server. Keep-alive was not specified in the RFC
+						for HTTP/1.0 and was more of a unofficial add-on, so it was not always
+						available.
+					</li>
+					<li>
+						In HTTP/1.1, the <em>Connection</em> header was standardized, and
+						connections were kept open unless explicitly specified using the
+						<code>Connection: close</code> header.
+						<sup><a href="#fn-1.1-persistence" id="ref-1.1-persistence">1.1</a></sup>
+					</li>
+					<li>
+						In HTTP/2, like in HTTP/1.1, keep-alive is the default option, but HTTP/2
+						contains several improvements to keep-alive connections, such as server
+						push.
+					</li>
+				</ul>
+				<p>The following chart displays the amount of RTT required to retrieve <em>n</em>
+				resources from a server (over a plain HTTP connection) with and without reusing the
+				same connection (with and without keep-alive).</p>
+
+				<div id="keepalive_chart" class="chart"></div>
+
+				<p>The following chart displays the amount of RTT required to retrieve <em>n</em>
+				resources from a server, using a HTTPS connection, with and without reusing the
+				connection.</p>
+
+				<div id="keepalive_https_chart" class="chart"></div>
+
+				<p>As the charts show, keep-alive connections greatly reduce the overhead required
+				to retrieve the content, especially when using HTTPS. Fortunately, keep-alive is the
+				default connection state in HTTP/1.1 and should be widely used.
+				<em>Un</em>fortunately, keep-alive increases the server load somewhat, as the server
+				has to keep track of all connections that may or may not send additional requests,
+				which may be expensive if there are many connected clients. More information on this
+				problem may be found in <a href="https://www.nginx.com/blog/http-keepalives-and-web-performance/"
+				title="HTTP Keepalive Connections and Web Performance">this post</a>, by the company
+				behind nginx, a popular server.</p>
+
+				<h3>TCP Pipelining</h3>
+				<p>TCP Pipelining extends the keep-alive mechanism, as it relies on sending multiple
+				requests at once, over the same TCP connection, without having to wait for the
+				response of the first request. Pipelining is unfortunately not widely supported, as
+				many browsers either do not implement pipelining or disable it by default. </p>
+				<p>The following chart shows the amount of RTT required to retrieve <em>n</em>
+				resources from a server without keep-alive, with keep-alive but without pipelining,
+				and with pipelining (and keep-alive). The amount of requests that can be sent at the
+				same time is not defined, but Mozilla recommends
+				<sup><a href="#fn-moz-pipelining" id="ref-moz-pipelining">link</a></sup>
+				a maximum of two requests at the same time. </p>
+				<div class="chart" id="pipelining_chart"></div>
+
+			<h2>Disk speed</h2>
+			<p>A webserver usually requires loading data from a storage medium to determine how to
+			respond to a request, and will be limited by the speed of the medium. Ways to reduce the
+			delay introduced by waiting for the storage medium include:</p>
+			<ol>
+				<li>
+					<em>Caching</em>: The server may store a copy of retrieved data on some faster
+					storage medium (e.g. RAM), so the primary storage medium (usually a HDD) does
+					not need to be accessed on every request. In some cases, copies of dynamic
+					content may be cached as well (in order to reduce the delay introduced by
+					generating the content), but care must be taken to ensure that the cached data
+					does not get stale, and that sensitive data is not served to the wrong users.
+					(Recent example of this going wrong: <a
+					   href="http://store.steampowered.com/news/19852/">Christmas 2015 at Steam</a>.)
+				   <br />Alternatively, the content could be cached on a different server, so the server
+				   doesn't have to serve the request at all.
+				</li>
+				<li>
+					<em>Compression</em>: See <a href="#sec-compression">above</a>.
+				</li>
+			</ol>
+
+			<h2>Architecture</h2>
+			<p>A webserver's architecture determines the way incoming requests are handled, and
+			indirectly the overall efficiency of the server, mainly the resources required to handle
+			a request. Most webservers are either <em>forking</em> or <em>event-driven</em> servers.</p>
+
+			<p><em>Forking</em> webservers start a new process or thread to handle each request.
+			This is not ideal, because creating new processes or threads requires intervention by
+			the OS, and requires more resources (RAM, CPU time).</p>
+
+			<p><em>Event-driven</em> webservers reuse processes for multiple requests, which allows
+			the webserver to handle more requests at once, which reduces the overhead required for
+			forking webservers.</p>
+
+				<h3>Context switches</h3>
+				<p>One of the biggest bottlenecks in forking webservers come from context switching.
+				Context switching is the process of suspending an executing process and replacing it
+				with another process, while maintaining the illusion of concurrency: processes
+				should not notice that they were suspended and should behave as if execution is
+				continuous.  Context switches are performed by the OS, and may be triggered by
+				several events, among others: multitasking, interrupts, and user/kernel mode
+				switching.  Context switches are computationally expensive: the CPU has to save the
+				contents of several registers (exact values vary by OS) somewhere in RAM, and then
+				load new values from somewhere else. While a context switch is being executed, no
+				directly useful work is done, as the CPU(core) cannot be used until the context
+				switch is complete.</p>
+				<p>Context switches happen many times per second in normal operation of the OS, but
+				webservers should still avoid unnecessary context switches in order to be more
+				efficient.</p>
+
+				<h3>Forking webservers</h3>
+				<p>todo</p>
+				<h3>Event-driven webservers</h3>
+				<p>todo</p>
+			<hr />
+			<h2>References</h2>
+			<ol>
+				<!-- References for Network Speed > Compression -->
+				<li id="fn-tcp-3whs">
+					<a href="http://tools.ietf.org/html/rfc793#section-3.4">
+						RFC 793: Establishing a connection</a>
+					<a href="#ref-tcp-3whs">&#8617;</a>
+				</li>
+				<li id="fn-AE-1.0">
+					<a href="https://tools.ietf.org/html/rfc1945#appendix-D.2.3"
+		title="Accept-Encoding">Accept-Encoding in HTTP/1.0</a> 
+					<a href="#ref-AE-1.0">&#8617;</a>
+				</li>
+				<li id="fn-AE-1.1">
+					<a href="http://tools.ietf.org/html/rfc2616#section-14.3" title="Accept-Encoding">
+						Accept-Encoding in HTTP/1.1</a> 
+					<a href="#ref-AE-1.1">&#8617;</a>
+				</li>
+
+				<li id="fn-CE-1.0">
+					<a href="https://tools.ietf.org/html/rfc1945#section-10.3"
+		title="Content-Encoding">Content-Encoding in HTTP/1.0</a> 
+					<a href="#ref-CE-1.0">&#8617;</a>
+				</li>
+				<li id="fn-CE-1.1">
+					<a href="http://tools.ietf.org/html/rfc2616#section-14.11"
+		title="Content-Encoding">Content-Encoding in HTTP/1.1</a> 
+					<a href="#ref-CE-1.1">&#8617;</a>
+				</li>
+
+				<li id="fn-IANA-compression">
+					<a href="https://www.iana.org/assignments/http-parameters/http-parameters.xml#content-coding"
+						title="HTTP Content Coding Registry">HTTP Content Coding Registry</a>
+					<a href="#ref-IANA-compression">&#8617;</a>
+				</li>
+
+				<!-- keep-alive -->
+				<li id="fn-1.1-persistence">
+					<a href="http://tools.ietf.org/html/rfc7230#section-6.3" title="Persistence">
+						Persistence in HTTP/1.1</a>
+					<a href="#ref-1.1-persistence">&#8617;</a>
+				</li>
+				<!-- Pipelining -->
+				<li id="fn-moz-pipelining">
+					<a href="http://www-archive.mozilla.org/projects/netlib/http/pipelining-faq.html"
+					title="HTTP/1.1 Pipelining FAQ">HTTP/1.1 Pipelining FAQ</a>
+					<a href="#ref-moz-pipelining">&#8617;</a>
+				</li>
+			</ol>
+		</div>
+	</body>
+</html>
