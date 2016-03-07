@@ -16,6 +16,7 @@
 			 <li><a href="#" class="active">General</a>
 				<ul>
 				   <li><a href="general.html#keepalive">Keepalive</a></li>
+				   <li><a href="general.html#security">Security</a></li>
 				</ul>         
 			 </li>
 			 <li><a href="performance.html">Performance</a>        
@@ -43,18 +44,59 @@
 			</p><p>
 				The web server includes hardware, operating system, web server software, TCP/IP protocols and site content - the web pages, images, scripts, and other files. If a web server is used internally and not publicly, it is an "intranet server".
 			</p><p>
-				A web server uses the HTTP protocol to deliver web content to browsers - web clients. The HTTP server software provides the web site functionality. HTTP is the protocol of the web <a data-external="https://www.rfc-editor.org/rfc/rfc2616.pdf" title="RFC 2616 HTTP/1.1, June 1999"></a>, and HTTP server software accepts requests from web clients and responds by sending back HTML documents and files. HTTP server software also executes scripts which perform functions like database searching and credit card authorisation. <a data-external="http://www.pcmag.com/encyclopedia/term/54342/web-server" title="PCMag: Web server"></a>
+				A web server uses the HTTP protocol to deliver web content to browsers - web clients. The HTTP server software provides the web site functionality. HTTP is the protocol of the web <a data-external="https://www.rfc-editor.org/rfc/rfc2616.pdf" title="RFC 2616 HTTP/1.1, June 1999 (PDF)"></a>, and HTTP server software accepts requests from web clients and responds by sending back HTML documents and files. HTTP server software also executes scripts which perform functions like database searching and credit card authorisation. <a data-external="http://www.pcmag.com/encyclopedia/term/54342/web-server" title="PCMag: Web server"></a>
 			</p><p>
 				Web servers use TCP/IP protocols to connect to the Internet. TCP (Transmission Control Protocol) is responsible for breaking data down into small packets before they can be sent over a network, and for assembling the packets again when they arrive. IP (internet Protocol) takes care of the communication between computers. It is responsible for addressing, sending and receiving the data packets over the Internet.
 			</p><p>
 				Common TCP/IP protocols are HTTP(S) (Hypertext Transfer Protocol (Secure)) and FTP. HTTP(S) takes care of the (secure) communication between a web server and a web browser. HTTP is used for sending requests from a web client (browser) to a web server, returning web content (web pages) from the server back to the client. HTTPS typically handles credit card transactions and other sensitive data. FTP (File Transfer Protocol) takes care of transmission of files between computers.
 			</p>
-			<h3 id="keepalive">TCP keepalive<a data-external="http://tldp.org/HOWTO/TCP-Keepalive-HOWTO/overview.html" title="TCP keepalive overview"></a></h3>
+			<h2 id="keepalive">TCP keepalive<a data-external="http://tldp.org/HOWTO/TCP-Keepalive-HOWTO/overview.html" title="TCP keepalive overview"></a></h3>
 			<p>
 				The keepalive concept is very simple: when you set up a TCP connection, you associate a set of timers. Some of these timers deal with the keepalive procedure. When the keepalive timer reaches zero, you send your peer a keepalive probe packet with no data in it and the ACK flag turned on. You can do this because of the TCP/IP specifications, as a sort of duplicate ACK, and the remote endpoint will have no arguments, as TCP is a stream-oriented protocol. On the other hand, you will receive a reply from the remote host (which doesn't need to support keepalive at all, just TCP/IP), with no data and the ACK set.
 			</p><p>
 				If you receive a reply to your keepalive probe, you can assert that the connection is still up and running without worrying about the user-level implementation. In fact, TCP permits you to handle a stream, not packets, and so a zero-length data packet is not dangerous for the user program. This procedure is useful because if the other peers lose their connection (for example by rebooting) you will notice that the connection is broken, even if you don't have traffic on it. If the keepalive probes are not replied to by your peer, you can assert that the connection cannot be considered valid and then take the correct action. <a data-external="http://ltxfaq.custhelp.com/app/answers/detail/a_id/1512/~/tcp-keepalives-explained" title="TCP keepalives explained"></a>
 			</p>
+			<h2 id="security">Security</h3>
+			<p>
+				Because web servers are one of the most targeted public faces of an organization, securing the web server itself is as important as securing the website or web application and the network around it. When securing a web server there are a few necessary steps:<a data-external="http://www.acunetix.com/websitesecurity/webserver-security/" title="Web server security | acunetix"></a>
+			</p>
+			<ol>
+				<li>
+					<em>Unnecessary services</em>: Default OS installations and configurations are not secure, and many of the network services that are provided for may not be used. Those services, however, do leave ports open, which reduces security. Close the serviced that are not used and disable them.
+				</li>
+				<li>
+					<em>Remote access</em>: Make sure when using remote access that the remote connection is secured properly by using tunneling and encryption protocols. Remote access is very useful, but also a security risk. Give users and files the right permissions and privileges.
+				</li>
+				<li>
+					<em>Multiple environments</em>: Develop newer versions of web applications on a different server, to make sure that possible vulnerabilities can not be discovered and exploited.
+				</li>
+				<li>
+					<em>Partitions</em>: Website files and scripts should be on a seperate partition or drive other than that of the operating system, logs, and other system files. If hackers now gain access to the web root directory they can not exploit other vulnerabilities.
+				</li>
+				<li>
+					<em>Security tools</em>: Use the security tools provided with web server software like URL scan. Install the security patches on time. Use scanners to help you automate the process of securing a web server and web application, and make the whole process easier.
+				</li>
+			</ol>
+			<h3>Security threats</h3>
+			<p>There are multiple ways for hackers to gain access to information you might not want them to know.</p>
+			<h4>SQL Injection</h4>
+			<p>
+				When an attacker uses SQL Injection, they can execute SQL statements that control a Relational Database Management System. This could affect any website that uses an SQL-bases database, which is why this is one of the most obvious web application vulnerablilities.<a data-external="http://www.acunetix.com/websitesecurity/sql-injection/" title="SQL Injection | acunetix"></a>
+			</p><p>
+				An attacker could use SQL Injection to bypass the authentication and authorization mechanisms of a web application, and gain acces to the contents of an entire database. SQL Injection can also be used to compromize data integrity.
+			</p><p>
+				To secure against SQL Injection you should never concentrate user input with application SQL to form the SQL sent to the database. An easy way to do this is by using parameterised statements in which the variable parts of the SQL are replaced with markers (usually '?').<a data-external="http://www.easysoft.com/developer/sql-injection.html" title="SQL Injection | easysoft"></a> <br />
+				The DQL in prepared when the SQL Engine parses it, validates it and notes that there is one parameter, when executed the parameter is passed seperately from the SQL.
+			</p>
+			<h4>Cross-site Scripting Attack</h4>
+			<p>
+				In a Cross-site Scripting (XSS) Attack, the attacker injects client-side code wherein they can execute malicious scripts. The attacker targets a vulnerability in a website or web application that the victim would visit, using the website as a vehicle to deliver malicious script to the victim's browser.<a data-external="http://www.acunetix.com/websitesecurity/cross-site-scripting/" title="XSS Attack | Acunetix"></a>
+			</p>
+			<img src="xss.png" style="margin-left: 3vw; width: 72vw;"></img>
+			<p>
+				To protect against XSS Attacks try to get rid of XSS vulnerabilities. There are two basic techniques to sanitize data. Blacklisting, using a list of known bad data to block illegal content from being executed, and whitelisting, using a list of known good data to allow only that content to be executed. Blacklisting is faster to set up but can by bypassed more easily. Whitelisting comes with a steep learning curve, but once mastered can be a much stronger security solution.<a data-external="https://www.nsa.gov/ia/_files/factsheets/xss_iad_factsheet_final_web.pdf" title="XSS cheatsheet NSA (pdf)"></a>
+			</p>
+
 			<hr />
 			<h2>References</h2>
 			<div id="references">
