@@ -16,7 +16,7 @@ function photos() {
         	maxpages = data.photoset.pages;
 
         	/*
-			adds a part to html body:
+			adds a part to html body in div with id="images":
 
 			<div class="imgthingie" id="i">
 				<img src="img_src" />
@@ -25,9 +25,9 @@ function photos() {
 			for every image.
         	*/
         	
-        	$( "<div class=\"imgthingie\" id=\"" + i + "\"> " ).appendTo( "#images").wrap(("<a href='" + a_href + "'></a>"))
-        	$("<img/>").attr("src", img_src).appendTo("#"+i)
-        	$( "</div>").appendTo("#images")
+        	$( "<div class=\"imgthingie\" id=\"" + i + "\"> " ).appendTo( "#images" ).wrap(("<a href='" + a_href + "'></a>" ))
+        	$( "<img/>" ).attr( "src", img_src ).appendTo( "#"+i )
+        	$( "</div>" ).appendTo( "#images" )
 
         	//WRAP IN LINK
 
