@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Performance</title>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="style.css" />
+		<link rel="stylesheet" type="text/css" href="charts.css" />
+		<script src="js/flot/jquery.js"></script>
+		<script src="js/jquery-2.2.0.min.js"></script>
+		<script src="references.js"></script>
+	</head>
+	<body>
+		<div id="wrap">
+		  <ul class="navbar">
+			 <li><a href="index.html">Home</a></li>
+			 <li><a href="#" class="active">General</a>
+				<ul>
+				   <li><a href="general.html#keepalive">Keepalive</a></li>
+				</ul>         
+			 </li>
+			 <li><a href="performance.html">Performance</a>        
+			 </li>
+			 <li><a href="#">Kinds of servers</a>
+				<ul>
+				   <li><a href="#">Threading/Forking</a></li>
+				   <li><a href="#">Event-driven</a></li>
+				   <li><a href="#">???</a></li>
+				</ul>         
+			 </li>
+			 <li><a href="photobrowser.html">Photobrowser</a> </li>
+			 <li><a href="#">About</a>
+				<ul>
+				   <li><a href="#">About Us</a></li>
+				   <li><a href="#">The Assignment</a></li>
+				</ul>         
+			 </li>
+		  </ul>
+		</div>
+		<div class="inhoud">
+			<h1>Web servers || General</h1>
+			<p>
+				Web servers are computers that deliver web pages. Without web servers you would not be able to browse the internet. Every computer can function as a web server by installing server software and connecting to the internet. However, websites should be able to be reached at any moment during the day, so the computer that hosts needs to be turned on and connected at all times. This is why not everyone has their own web server in their home. Most web pages are hosted at hosts that specialise in web hosting and have servers and backup servers running.
+			</p><p>
+				The web server includes hardware, operating system, web server software, TCP/IP protocols and site content - the web pages, images, scripts, and other files. If a web server is used internally and not publicly, it is an "intranet server".
+			</p><p>
+				A web server uses the HTTP protocol to deliver web content to browsers - web clients. The HTTP server software provides the web site functionality. HTTP is the protocol of the web <a data-external="https://www.rfc-editor.org/rfc/rfc2616.pdf" title="RFC 2616 HTTP/1.1, June 1999"></a>, and HTTP server software accepts requests from web clients and responds by sending back HTML documents and files. HTTP server software also executes scripts which perform functions like database searching and credit card authorisation. <a data-external="http://www.pcmag.com/encyclopedia/term/54342/web-server" title="PCMag: Web server"></a>
+			</p><p>
+				Web servers use TCP/IP protocols to connect to the Internet. TCP (Transmission Control Protocol) is responsible for breaking data down into small packets before they can be sent over a network, and for assembling the packets again when they arrive. IP (internet Protocol) takes care of the communication between computers. It is responsible for addressing, sending and receiving the data packets over the Internet.
+			</p><p>
+				Common TCP/IP protocols are HTTP(S) (Hypertext Transfer Protocol (Secure)) and FTP. HTTP(S) takes care of the (secure) communication between a web server and a web browser. HTTP is used for sending requests from a web client (browser) to a web server, returning web content (web pages) from the server back to the client. HTTPS typically handles credit card transactions and other sensitive data. FTP (File Transfer Protocol) takes care of transmission of files between computers.
+			</p>
+			<h3 id="keepalive">TCP keepalive<a data-external="http://tldp.org/HOWTO/TCP-Keepalive-HOWTO/overview.html" title="TCP keepalive overview"></a></h3>
+			<p>
+				The keepalive concept is very simple: when you set up a TCP connection, you associate a set of timers. Some of these timers deal with the keepalive procedure. When the keepalive timer reaches zero, you send your peer a keepalive probe packet with no data in it and the ACK flag turned on. You can do this because of the TCP/IP specifications, as a sort of duplicate ACK, and the remote endpoint will have no arguments, as TCP is a stream-oriented protocol. On the other hand, you will receive a reply from the remote host (which doesn't need to support keepalive at all, just TCP/IP), with no data and the ACK set.
+			</p><p>
+				If you receive a reply to your keepalive probe, you can assert that the connection is still up and running without worrying about the user-level implementation. In fact, TCP permits you to handle a stream, not packets, and so a zero-length data packet is not dangerous for the user program. This procedure is useful because if the other peers lose their connection (for example by rebooting) you will notice that the connection is broken, even if you don't have traffic on it. If the keepalive probes are not replied to by your peer, you can assert that the connection cannot be considered valid and then take the correct action. <a data-external="http://ltxfaq.custhelp.com/app/answers/detail/a_id/1512/~/tcp-keepalives-explained" title="TCP keepalives explained"></a>
+			</p>
+			<hr />
+			<h2>References</h2>
+			<div id="references">
+			</div>
+		</div>
+	</body>
+</html>
